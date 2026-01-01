@@ -13,9 +13,13 @@ import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 
 
+
 @Keep
 class AudioEffectBroadcasterHook : IXposedHookLoadPackage {
-    val TAG = "AEBX"
+
+    companion object {
+        const val TAG = "AEBX"
+    }
 
     // var targetContext: Context? = null
 
@@ -55,9 +59,14 @@ class AudioEffectBroadcasterHook : IXposedHookLoadPackage {
 
     private fun hookExoPlayerImpl(lpparam: XC_LoadPackage.LoadPackageParam) {
         try {
-            val exoPlayerImpl = XposedHelpers.findClass(
-                "androidx.media3.exoplayer.ExoPlayerImpl", lpparam.classLoader
-            )
+            val exoPlayerImpl = findExoPlayerImplClass(lpparam.classLoader)
+
+            if (exoPlayerImpl == null) {
+                Log.d(TAG, "No compatible ExoPlayer class found.")
+                return
+            }
+
+            Log.d(TAG, "Hooking ${exoPlayerImpl.packageName}.${exoPlayerImpl.name}")
 
             XposedHelpers.findAndHookMethod(
                 exoPlayerImpl,
@@ -83,8 +92,24 @@ class AudioEffectBroadcasterHook : IXposedHookLoadPackage {
                 })
 
         } catch (e: Throwable) {
-            Log.e(TAG, "Error", e)
+            Log.e(TAG, "hookExoPlayerImpl Error", e)
         }
+    }
+
+    private fun findExoPlayerImplClass(classLoader: ClassLoader): Class<*>? {
+        val classNames = listOf(
+            "androidx.media3.exoplayer.ExoPlayerImpl",
+            "com.google.android.exoplayer2.ExoPlayerImpl",
+                    )
+
+        for (className in classNames) {
+            try {
+                return XposedHelpers.findClass(className, classLoader)
+            } catch (e: XposedHelpers.ClassNotFoundError) {
+            }
+        }
+
+        return null
     }
 
     private fun broadcastAudioEffectAction(playerInstance: Any, event: String) {
