@@ -21,27 +21,7 @@ class AudioEffectBroadcasterHook : IXposedHookLoadPackage {
         const val TAG = "AEBX"
     }
 
-    // var targetContext: Context? = null
-
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
-
-//        try {
-//            var cls = XposedHelpers.findClass(
-//                "androidx.media3.exoplayer.ExoPlayerImpl",
-//                lpparam.classLoader
-//            )
-//
-//            Log.i(
-//                TAG,
-//                cls.methods.filter { it.name.lowercase().contains("addListener".lowercase()) }
-//                    .joinToString("\n").toString()
-//            )
-//        } catch (e: Throwable) {
-//            Log.e(TAG, "Error", e)
-//        }
-
-
-        // hookOnCreate(lpparam)
 
         val hookedExoPlayerImpl = hookExoPlayerImpl(lpparam)
 
@@ -49,16 +29,6 @@ class AudioEffectBroadcasterHook : IXposedHookLoadPackage {
 
         Log.d(TAG, "Hooked ${lpparam.packageName}")
     }
-
-//    private fun hookOnCreate(lpparam: XC_LoadPackage.LoadPackageParam) {
-//        XposedHelpers.findAndHookMethod(
-//            "android.app.Application", lpparam.classLoader, "onCreate", object : XC_MethodHook() {
-//                @Throws(Throwable::class)
-//                override fun afterHookedMethod(param: MethodHookParam) {
-//                    targetContext = param.thisObject as Context?
-//                }
-//            })
-//    }
 
     private fun hookAudioTrack(lpparam: XC_LoadPackage.LoadPackageParam) {
 
