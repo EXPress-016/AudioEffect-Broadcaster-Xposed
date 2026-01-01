@@ -14,8 +14,10 @@ An Xposed module designed to broadcast audio session creation and destruction ev
 Many popular audio effect applications, such as Wavelet and Viper4Android, rely on Android's standard AudioEffect broadcasts (`ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION` and `ACTION_CLOSE_AUDIO_EFFECT_CONTROL_SESSION`) to detect when an audio session starts or ends. However, not all applications send these broadcasts, which means that these audio effect apps won't detect the audio and therefore won't apply any effects.
 
 ## Solution
-**AudioEffect-Broadcaster-Xposed** is an Xposed module that solves this problem by hooking into the `ExoPlayerImpl` class, a core component of the widely used `androidx.media3` media playback library.
+**AudioEffect-Broadcaster-Xposed** forces applications to announce their audio sessions. It does this by hooking into the Android media framework with two-layer approach:
 
-It specifically monitors calls to the `setPlayWhenReady` method. When an app calls this method to start playback (`true`), the module broadcasts the `ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION` intent. When playback is paused (`false`), it broadcasts the `ACTION_CLOSE_AUDIO_EFFECT_CONTROL_SESSION` intent.
+First, it targets `ExoPlayer` (`androidx.media3` and `com.google.android.exoplayer2`), the most common media player library. By monitoring the `setPlayWhenReady` method, it can tell when audio starts and stops, and broadcasts the standard `ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION` and `ACTION_CLOSE_AUDIO_EFFECT_CONTROL_SESSION` intents accordingly.
 
-By doing this, it effectively makes many modern apps compatible with session-based audio effect controllers like Wavelet and Viper4Android.
+As a fallback for apps that don't use ExoPlayer, the module hooks the fundamental `android.media.AudioTrack` class. By watching for `play` and `pause`/`stop`/`release`/`flush` events, it ensures nearly all audio playback is detected and broadcasted correctly.
+
+This makes previously unsupported apps visible to audio effect engines like Wavelet and Viper4Android.
