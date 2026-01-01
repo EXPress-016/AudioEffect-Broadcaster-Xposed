@@ -23,7 +23,10 @@ class AudioEffectBroadcasterHook : IXposedHookLoadPackage {
 
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
 
-        val hookedExoPlayerImpl = hookExoPlayerImpl(lpparam)
+        val hookedExoPlayerImpl = if (lpparam.packageName == "com.apple.android.music") {
+            Log.d(TAG, "Apple Music detected, trying android.media.AudioTrack")
+            false
+        } else hookExoPlayerImpl(lpparam)
 
         if (!hookedExoPlayerImpl) hookAudioTrack(lpparam)
 
