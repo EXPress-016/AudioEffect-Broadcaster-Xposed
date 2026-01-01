@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">AudioEffect Broadcaster Xposed</string>
+    <string name="xposed_description">Broadcasts AudioEffect to let equalizers apply effects.</string>
+</resources>
