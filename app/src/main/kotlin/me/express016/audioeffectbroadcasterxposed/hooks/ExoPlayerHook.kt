@@ -2,8 +2,6 @@ package me.express016.audioeffectbroadcasterxposed.hooks
 
 import android.media.audiofx.AudioEffect
 import android.util.Log
-import androidx.annotation.OptIn
-import androidx.media3.common.util.UnstableApi
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage
@@ -21,7 +19,6 @@ fun hookExoPlayerImpl(lpparam: XC_LoadPackage.LoadPackageParam): Boolean {
             "setPlayWhenReady",
             Boolean::class.javaPrimitiveType,
             object : XC_MethodHook() {
-                @OptIn(UnstableApi::class)
                 override fun afterHookedMethod(param: MethodHookParam?) {
                     val playerInstance = param?.thisObject
 

@@ -64,7 +64,6 @@ android {
 
 dependencies {
     compileOnly(libs.xposed)
-    compileOnly(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.core.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
