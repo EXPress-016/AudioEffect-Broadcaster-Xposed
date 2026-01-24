@@ -12,7 +12,7 @@ fun hookExoPlayerImpl(lpparam: XC_LoadPackage.LoadPackageParam): Boolean {
     try {
         val exoPlayerImpl = findExoPlayerImplClass(lpparam.classLoader) ?: return false
 
-        Log.d(TAG, "Hooking ${exoPlayerImpl.packageName}.${exoPlayerImpl.name}")
+        Log.d(TAG, "Hooking ${exoPlayerImpl.name}")
 
         XposedHelpers.findAndHookMethod(
             exoPlayerImpl,

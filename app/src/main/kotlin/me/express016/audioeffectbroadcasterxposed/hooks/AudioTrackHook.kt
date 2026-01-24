@@ -15,7 +15,7 @@ fun hookAudioTrack(lpparam: XC_LoadPackage.LoadPackageParam) {
         val audioTrack =
             XposedHelpers.findClass("android.media.AudioTrack", lpparam.classLoader)
 
-        Log.d(TAG, "Hooking ${audioTrack.packageName}.${audioTrack.name}")
+        Log.d(TAG, "Hooking ${audioTrack.name}")
 
         XposedHelpers.findAndHookMethod(
             audioTrack, "play", object : XC_MethodHook() {
