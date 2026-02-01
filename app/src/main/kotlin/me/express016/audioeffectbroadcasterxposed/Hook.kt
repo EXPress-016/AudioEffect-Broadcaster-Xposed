@@ -13,7 +13,7 @@ val forceAudioTrackPackages = arrayOf(
 )
 
 @Keep
-class AudioEffectBroadcasterHook : IXposedHookLoadPackage {
+class Hook : IXposedHookLoadPackage {
 
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
         if (forceAudioTrackPackages.contains(lpparam.packageName)) {
