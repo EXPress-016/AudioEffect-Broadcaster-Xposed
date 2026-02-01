@@ -11,9 +11,8 @@ val forceAudioTrackPackages = arrayOf(
     // Has ExoPlayer but doesn't use it
     "com.apple.android.music"
 )
+class Hook @Keep constructor() : IXposedHookLoadPackage {
 
-@Keep
-class Hook : IXposedHookLoadPackage {
 
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
         if (forceAudioTrackPackages.contains(lpparam.packageName)) {
