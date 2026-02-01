@@ -4,7 +4,7 @@ import java.io.FileInputStream
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+
 }
 
 val keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -44,8 +44,7 @@ android {
         release {
             isMinifyEnabled = true
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("release")
         }
@@ -55,10 +54,11 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    kotlin {
-       compilerOptions {
-           jvmTarget = JvmTarget.JVM_11
-       }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_11
     }
 }
 
