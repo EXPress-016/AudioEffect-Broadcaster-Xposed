@@ -6,10 +6,21 @@ xposed = '82'
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
-
+lifecycleRuntimeKtx = "2.10.0"
+activityCompose = "1.12.3"
+composeBom = "2026.01.01"
+coil = "3.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 xposed = { group = "de.robv.android.xposed", name ="api", version.ref="xposed"}
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -17,4 +28,5 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
